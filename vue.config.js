@@ -6,12 +6,14 @@ module.exports = {
     port: 3000,
     https: {
       key: fs.readFileSync(
-        path.resolve(`/.office-addin-dev-certs/localhost.key`)
+        path.resolve(`./vercel/.office-addin-dev-certs/localhost.key`)
       ),
       cert: fs.readFileSync(
-        path.resolve(`/.office-addin-dev-certs/localhost.crt`)
+        path.resolve(`./vercel/.office-addin-dev-certs/localhost.crt`)
       ),
-      ca: fs.readFileSync(path.resolve(`/.office-addin-dev-certs/ca.crt`)),
+      ca: fs.readFileSync(
+        path.resolve(`./vercel/.office-addin-dev-certs/ca.crt`)
+      ),
     },
   },
 };
