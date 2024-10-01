@@ -16,7 +16,7 @@
   <IconUrl DefaultValue="https://inpart-addin-96amclb4g-pratik-sangamis-projects.vercel.app/assets/icon-64.png" />
   <HighResolutionIconUrl DefaultValue="https://inpart-addin-96amclb4g-pratik-sangamis-projects.vercel.app/assets/icon-128.png"/>
   <AppDomains>
-    <AppDomain>AppDomain1</AppDomain>
+    <AppDomain>https://inpart-addin-96amclb4g-pratik-sangamis-projects.vercel.app</AppDomain>
     <AppDomain>AppDomain2</AppDomain>
     <AppDomain>AppDomain3</AppDomain>
   </AppDomains>
