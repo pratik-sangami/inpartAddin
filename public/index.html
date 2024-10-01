@@ -1,130 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MSAL Authentication and Download Email Content</title>
-    <!-- Add MSAL.js -->
-    <script src="https://alcdn.msauth.net/browser/2.30.0/js/msal-browser.min.js"></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   </head>
   <body>
-    <h1>Authenticate with Microsoft</h1>
-    <button id="signinBtn">Sign In</button>
-    <button id="signoutBtn" style="display: none">Sign Out</button>
-    <button id="downloadBtn" style="display: none">
-      Download Email Content
-    </button>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // MSAL configuration
-        const msalConfig = {
-          auth: {
-            clientId: "6821c268-c82f-46be-a889-dc170861f0d8",
-            authority: "https://login.microsoftonline.com/common",
-            redirectUri: "https://inpart-addin.vercel.app/",
-          },
-          cache: {
-            cacheLocation: "localStorage", // Configures cache location
-            storeAuthStateInCookie: true, // Set to true if you're experiencing issues on IE11 or Edge
-          },
-        };
-
-        // Create an instance of PublicClientApplication
-        const msalInstance = new msal.PublicClientApplication(msalConfig);
-
-        // Sign-in button click handler
-        document.getElementById("signinBtn").addEventListener("click", () => {
-          const loginRequest = {
-            scopes: ["User.Read"],
-          };
-
-          msalInstance
-            .loginPopup(loginRequest)
-            .then((loginResponse) => {
-              console.log("id_token acquired at: " + new Date().toString());
-              console.log(loginResponse);
-
-              // Show sign-out and download buttons, hide sign-in button
-              document.getElementById("signinBtn").style.display = "none";
-              document.getElementById("signoutBtn").style.display = "block";
-              document.getElementById("downloadBtn").style.display = "block";
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        });
-
-        // Sign-out button click handler
-        document.getElementById("signoutBtn").addEventListener("click", () => {
-          msalInstance
-            .logoutPopup()
-            .then(() => {
-              console.log("User signed out.");
-
-              // Show sign-in button, hide sign-out and download buttons
-              document.getElementById("signinBtn").style.display = "block";
-              document.getElementById("signoutBtn").style.display = "none";
-              document.getElementById("downloadBtn").style.display = "none";
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        });
-
-        // Download button click handler
-        document.getElementById("downloadBtn").addEventListener("click", () => {
-          if (!Office.context || !Office.context.mailbox) {
-            console.error("Office.js is not available.");
-            return;
-          }
-
-          // Get the subject of the email
-          Office.context.mailbox.item.subject.getAsync((subjectResult) => {
-            if (subjectResult.status === Office.AsyncResultStatus.Failed) {
-              console.error("Failed to get email subject.");
-              return;
-            }
-            const subject = subjectResult.value;
-
-            // Get the sender of the email
-            Office.context.mailbox.item.sender.getAsync((senderResult) => {
-              if (senderResult.status === Office.AsyncResultStatus.Failed) {
-                console.error("Failed to get email sender.");
-                return;
-              }
-              const sender = senderResult.value.displayName;
-
-              // Create the content for the text file
-              const content = `Subject: ${subject}\nSender: ${sender}\n`;
-
-              // Create a blob with the content
-              const blob = new Blob([content], { type: "text/plain" });
-
-              // Create a link element for the download
-              const link = document.createElement("a");
-              link.href = window.URL.createObjectURL(blob);
-              link.download = "email-content.txt";
-
-              // Append the link to the body and trigger the download
-              document.body.appendChild(link);
-              link.click();
-
-              // Remove the link after download
-              document.body.removeChild(link);
-            });
-          });
-        });
-
-        // Check if the user is already logged in
-        const currentAccounts = msalInstance.getAllAccounts();
-        if (currentAccounts.length > 0) {
-          console.log("User already logged in.");
-          document.getElementById("signinBtn").style.display = "none";
-          document.getElementById("signoutBtn").style.display = "block";
-          document.getElementById("downloadBtn").style.display = "block";
-        }
-      });
-    </script>
+    <noscript>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
   </body>
 </html>
