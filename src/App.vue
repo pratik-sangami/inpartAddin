@@ -284,7 +284,7 @@ export default {
           auth: {
             clientId: "6821c268-c82f-46be-a889-dc170861f0d8",
             authority: "https://login.microsoftonline.com/common",
-            redirectUri: "https://localhost:3000",
+            redirectUri: "https://inpart-addin.vercel.app/",
           },
           system: {
             allowNativeBroker: true,
