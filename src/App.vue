@@ -290,7 +290,6 @@ export default {
             allowNativeBroker: true,
           },
         };
-        debugger;
         console.log("asd");
         console.log("asd");
         console.log("asd");
