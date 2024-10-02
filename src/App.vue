@@ -171,13 +171,13 @@
             <div v-html="body" class="email-body"></div>
           </div>
         </div>
-        <button
+        <!-- <button
           class="myBtn"
           @click="summarizeContent"
           :disabled="fetchingOpenAi"
         >
           {{ fetchingOpenAi ? "summarizing ..." : "Summarize using AI " }}
-        </button>
+        </button> -->
 
         <div v-if="summarizedContent">
           <b>Summarized content:</b>
@@ -277,6 +277,30 @@ export default {
   methods: {
     getMessageClassDescription(key) {
       return messageClasses[key] || false;
+    },
+    downloadTxtFile() {
+      const element = document.createElement("a");
+      const emailData = {
+        subject: this.subject,
+        senderEmail: this.senderEmail,
+        senderName: this.senderName,
+        ccRecipients: this.ccRecipients.map(
+          (recipient) => recipient.emailAddress
+        ),
+        bccRecipients: this.bccRecipients.map(
+          (recipient) => recipient.emailAddress
+        ),
+        body: this.body,
+        itemId: this.itemId,
+        itemClass: this.itemClass,
+      };
+      const file = new Blob([emailData], {
+        type: "text/plain",
+      });
+      element.href = URL.createObjectURL(file);
+      element.download = "myFile.txt";
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
     },
     async initializeMsal() {
       try {
