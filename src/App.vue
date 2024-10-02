@@ -186,7 +186,7 @@
           </div>
         </div>
         <div>
-          <button class="myBtn" @click="handleLogEmail">Log mail</button>
+          <button class="myBtn" @click="downloadTxtFile">Download mail</button>
         </div>
       </div>
     </div>
