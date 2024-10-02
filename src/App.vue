@@ -294,7 +294,7 @@ export default {
         itemId: this.itemId,
         itemClass: this.itemClass,
       };
-      const file = new Blob(JSON.stringify(emailData), {
+      const file = new Blob([JSON.stringify(emailData)], {
         type: "text/plain",
       });
       element.href = URL.createObjectURL(file);
